@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}kFleet Manager{% endblock %}</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+ <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #05225003;
+      --color-background: #363636;
+      --color-white: #ffffff;
+      --color-red: #ff0000;
+      --color-secondary: rgba(170.6, 129.9, 101.6, 0.6);
+      --color-accent: #b3937b;
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+    }
+    
+    body {
+      background-color: var(--color-background);
+      color: var(--color-white);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(179, 147, 123, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(179, 147, 123, 0.05) 0%, transparent 20%);
+    }
+    
+    .guide-header {
+      background: linear-gradient(145deg, #05225003, #2a2a2a);
+      border: 1px solid var(--color-accent);
+      border-radius: 16px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .guide-card {
+      background-color: var(--color-primary);
+      border: 1px solid var(--color-accent);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .guide-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .section-title {
+      position: relative;
+      padding-left: 1rem;
+    }
+    
+    .section-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 80%;
+      background: linear-gradient(to bottom, var(--color-accent), #8a6d5b);
+      border-radius: 2px;
+    }
+ .tip-card {
+      background: linear-gradient(145deg, rgba(179, 147, 123, 0.1), rgba(179, 147, 123, 0.05));
+      border-left: 3px solid var(--color-accent);
+      border-radius: 8px;
+    }
+    
+    .feature-icon {
+      background-color: rgba(179, 147, 123, 0.2);
+      border-radius: 10px;
+      padding: 12px;
+      display: inline-flex;
+      margin-right: 1rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(145deg, #05225003, #57534e);
+      transition: all 0.2s ease;
+      border: 1px solid var(--color-accent);
+    }
+    
+    .btn-primary:hover {
+      background-color: #343434;
+      transform: translateY(-2px);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-accent);
+      transition: all 0.2s ease;
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(179, 147, 123, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .stats-card {
+      background: linear-gradient(145deg, #b42930, #502205);
+      border: 1px solid var(--color-accent);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .troubleshooting-item {
+      transition: all 0.3s ease;
+    }
+    
+    .troubleshooting-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      transform: translateX(5px);
+    }
+    </style>
+</head>
+<body class="bg-gray-50 construction-bg min-h-screen">
+<!-- Navigation -->
+<nav class="bg-construction-700 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <a href="/" class="text-xl text-stone-400/45 font-bold flex items-center">
+            <div class="h-8 w-8 mr-2 rounded-lg bg-red-600 flex items-center justify-center transform rotate-12 shadow-md">
+                <span class=" font-bold text-xl tracking-tighter">kFleet</span>
+            </div>
+            &nbsp; Manager
+        </a>
+        <div class="flex space-x-4">
+            <a href="/" class="px-3 py-2 rounded hover:bg-construction-600">Dashboard</a>
+            <a href="/equipment" class="px-3 py-2 rounded hover:bg-construction-600">Equipment</a>
+            <a href="/categories" class="px-3 py-2 rounded hover:bg-construction-600">Categories</a>
+            <a href="/staff" class="px-3 py-2 rounded hover:bg-construction-600">Staff</a>
+        </div>
+    </div>
+</nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Title -->
+        <div class="mb-6 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-stone-400">{% block heading %}{% endblock %}</h1>
+            {% block action_button %}{% endblock %}
+        </div>
+        
+        <!-- Flash Messages -->
+        {% if flash %}
+            <div class="mb-6 p-4 rounded-lg {% if flash.type == 'success' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                {{ flash.message }}
+            </div>
+        {% endif %}
+        
+        <!-- Content Block -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#343434] text-white py-6 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Kômandy kFleet Manager. All rights reserved.</p>
+            <p class="text-gray-400 text-sm mt-2">Track, maintain, and optimize your construction equipment</p>
+        </div>
+    </footer>
+</body>
+</html>
+

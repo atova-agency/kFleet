@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Staff | kFleet{% endblock %}
+{% block heading %}Add New Staff{% endblock %}
+
+{% block content %}
+<div class="guide-card p-6 max-w-3xl mx-auto">
+    <form method="POST" action="/staff" >
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+                <label for="full_name" class="block text-sm font-medium text-accent mb-2">Full Name</label>
+                <input type="text" id="full_name" name="full_name" required
+                    class="w-full px-4 py-3 bg-slate-600/30 border border-accent/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50 text-white placeholder-gray-400 transition-colors">
+            </div>
+            
+            <div>
+                <label for="license_number" class="block text-sm font-medium text-accent mb-2">License Number</label>
+                <input type="text" id="license_number" name="license_number"
+                    class="w-full px-4 py-3 bg-slate-600/30 border border-accent/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50 text-white placeholder-gray-400 transition-colors">
+            </div>
+            
+            <div class="md:col-span-2">
+                <label for="contact_info" class="block text-sm font-medium text-accent mb-2">Contact Information</label>
+                <textarea id="contact_info" name="contact_info" rows="3"
+                    class="w-full px-4 py-3 bg-slate-600/30 border border-accent/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50 text-white placeholder-gray-400"></textarea>
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-accent mb-2">Assigned Equipment</label>
+            {% if equipment | length > 0 %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {% for item in equipment %}
+                <div class="flex items-start p-3 bg-slate-600/30 rounded-lg border border-accent/30">
+                    <div class="flex items-center h-5 mt-0.5">
+                        <input id="equipment-{{ item.id }}" 
+                               name="assigned_equipment"  
+                               type="checkbox" 
+                               value="{{ item.id }}"
+                               class="h-4 w-4 text-accent focus:ring-accent border-accent/50 rounded bg-slate-600/30">
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label for="equipment-{{ item.id }}" class="font-medium text-white">
+                            {{ item.name }} ({{ item.brand }} {{ item.model }})
+                        </label>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-4 rounded-lg bg-slate-600/30 border border-accent/30">
+                <p class="text-sm text-gray-400">No equipment available for assignment</p>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="flex justify-end space-x-3">
+            <a href="/staff" class="btn-outline px-4 py-2 rounded-lg text-white hover:bg-accent/10 transition-colors">
+                Cancel
+            </a>
+            <button type="submit" class="btn-primary px-4 py-2 rounded-lg text-white bg-gradient-to-r from-accent/80 to-accent/60 hover:from-accent hover:to-accent/90 transition-all">
+                Add Staff
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
